@@ -158,3 +158,15 @@ function nextWord(isRemembered) {
         updateCardUI();
     }, 150);
 }
+// ฟังก์ชันสำหรับปุ่ม "เริ่มกันเลย" ในหน้า Welcome
+function startApp() {
+    const welcomeView = document.getElementById('view-welcome');
+    // เลื่อนหน้า Welcome ขึ้นไปด้านบนให้หายไป
+    welcomeView.style.transform = 'translateY(-100%)';
+    
+    // ลบออกจากระบบหลังแอนิเมชันจบ เพื่อไม่ให้กินทรัพยากรเครื่อง
+    setTimeout(() => {
+        welcomeView.style.display = 'none';
+    }, 700);
+}
+
