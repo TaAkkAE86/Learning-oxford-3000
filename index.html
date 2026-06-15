@@ -9,32 +9,29 @@
     <style>
         body { 
             font-family: 'Prompt', 'Nunito', sans-serif; 
-            background-color: #f3f4f6; /* สีพื้นหลังนอกกรอบมือถือ */
+            background-color: #f3f4f6; 
             -webkit-tap-highlight-color: transparent;
         }
-        /* App Container ให้เหมือนหน้าจอมือถือ */
         .app-container {
             max-width: 480px;
             margin: 0 auto;
             background-color: #ffffff;
             height: 100vh;
-            height: 100dvh; /* รองรับ Mobile Browser */
+            height: 100dvh; 
             display: flex;
             flex-direction: column;
             position: relative;
             box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* ป้องกันหน้าจอเลื่อนซ้ายขวา */
         }
-        /* ซ่อน Scrollbar แต่ยัง Scroll ได้ */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Flip Card CSS */
         .perspective { perspective: 1000px; }
         .preserve-3d { transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1); }
         .backface-hidden { backface-visibility: hidden; }
         .rotate-y-180 { transform: rotateY(180deg); }
 
-        /* Chunky Button (สไตล์ Duolingo) */
         .btn-chunky {
             transition: all 0.1s;
             border-bottom-width: 4px;
@@ -43,31 +40,77 @@
             border-bottom-width: 0px;
             transform: translateY(4px);
         }
+
+        /* 🌟 แอนิเมชันสำหรับหน้า Welcome */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(var(--rot)); }
+            50% { transform: translateY(-15px) rotate(var(--rot)); }
+            100% { transform: translateY(0px) rotate(var(--rot)); }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
     </style>
 </head>
 <body>
 
     <div class="app-container">
+
+        <!-- ========================================== -->
+        <!-- VIEW 0: WELCOME PAGE (หน้าแรกสุด) -->
+        <!-- ========================================== -->
+        <div id="view-welcome" class="flex flex-col h-full w-full absolute top-0 left-0 bg-blue-600 z-50 transition-transform duration-700 ease-in-out items-center justify-center text-white px-6">
+            
+            <!-- กราฟิกลอยตัว -->
+            <div class="relative w-full max-w-[250px] h-48 mb-10 flex justify-center items-center">
+                <!-- การ์ดซ้าย -->
+                <div class="absolute animate-float bg-white/20 backdrop-blur-sm text-4xl p-4 rounded-2xl shadow-lg -left-2 top-8" style="--rot: -15deg;">📚</div>
+                <!-- การ์ดขวา -->
+                <div class="absolute animate-float delay-200 bg-white/20 backdrop-blur-sm text-4xl p-4 rounded-2xl shadow-lg -right-2 top-4" style="--rot: 15deg;">🚀</div>
+                <!-- การ์ดกลาง (ใหญ่สุด) -->
+                <div class="absolute animate-float delay-100 bg-white text-slate-800 text-6xl p-6 rounded-3xl shadow-2xl z-10" style="--rot: 0deg;">🎓</div>
+            </div>
+            
+            <!-- ข้อความต้อนรับ -->
+            <div class="text-center animate-fade-in-up delay-200">
+                <h1 class="text-5xl font-extrabold mb-2 tracking-tight font-[Nunito]">Oxford<span class="text-amber-400">3000</span></h1>
+                <p class="text-blue-100 text-lg leading-relaxed mb-12">
+                    พิชิต 3,000 คำศัพท์ภาษาอังกฤษ<br>ที่ใช้บ่อยที่สุดในชีวิตประจำวัน
+                </p>
+            </div>
+            
+            <!-- ปุ่มเริ่มกันเลย -->
+            <button onclick="startApp()" class="btn-chunky w-full max-w-xs bg-amber-400 border-amber-500 text-amber-900 text-xl font-bold py-4 rounded-2xl animate-fade-in-up delay-400 shadow-lg hover:bg-amber-300">
+                เริ่มกันเลย!
+            </button>
+
+            <p class="absolute bottom-6 text-blue-300 text-xs animate-fade-in-up delay-400">Learn anywhere, anytime.</p>
+        </div>
         
         <!-- ========================================== -->
         <!-- VIEW 1: HOME (รายการหมวดหมู่) -->
         <!-- ========================================== -->
         <div id="view-home" class="flex flex-col h-full w-full absolute top-0 left-0 bg-slate-50 z-10 transition-transform duration-300">
-            <!-- Top Header -->
-            <header class="bg-white px-5 py-4 flex justify-between items-center border-b border-slate-200 sticky top-0 z-20">
-                <h1 class="text-xl font-extrabold text-slate-800 tracking-tight">Oxford<span class="text-blue-500">3000</span></h1>
+            <header class="bg-white px-5 py-4 flex justify-between items-center border-b border-slate-200 sticky top-0 z-20 shadow-sm">
+                <h1 class="text-xl font-extrabold text-slate-800 tracking-tight font-[Nunito]">Oxford<span class="text-blue-500">3000</span></h1>
                 <div class="flex items-center gap-1 text-amber-500 font-bold bg-amber-50 px-3 py-1.5 rounded-xl">
                     <span>⭐</span> <span id="total-fav-count">0</span>
                 </div>
             </header>
 
-            <!-- Categories List -->
             <main class="flex-1 overflow-y-auto no-scrollbar p-5 pb-24 space-y-4" id="category-list">
-                <!-- ข้อมูลหมวดหมู่จะถูกแทรกที่นี่ -->
                 <div class="text-center text-slate-400 mt-10">กำลังโหลดบทเรียน...</div>
             </main>
 
-            <!-- Bottom Navigation -->
             <nav class="bg-white border-t border-slate-200 absolute bottom-0 w-full h-16 flex justify-around items-center px-6 z-20">
                 <button class="flex flex-col items-center text-blue-500">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
@@ -84,8 +127,6 @@
         <!-- VIEW 2: LEARN MODE (หน้าการ์ดคำศัพท์) -->
         <!-- ========================================== -->
         <div id="view-learn" class="flex flex-col h-full w-full absolute top-0 left-0 bg-white z-30 translate-x-full transition-transform duration-300">
-            
-            <!-- Learn Header & Progress -->
             <header class="px-5 py-4 flex items-center gap-4">
                 <button onclick="closeLearnMode()" class="text-slate-400 hover:text-slate-600 p-2 -ml-2">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -96,29 +137,24 @@
                 <span id="progress-text" class="text-sm font-bold text-slate-500">0/0</span>
             </header>
 
-            <!-- Flashcard Area -->
             <main class="flex-1 flex flex-col items-center justify-center p-6 perspective">
                 <div id="flashcard" class="w-full max-w-sm h-80 preserve-3d cursor-pointer relative" onclick="flipCard()">
-                    
-                    <!-- ด้านหน้าการ์ด (อังกฤษ) -->
+                    <!-- หน้าอังกฤษ -->
                     <div class="absolute w-full h-full backface-hidden bg-white border-2 border-slate-200 rounded-3xl shadow-sm flex flex-col items-center justify-center p-6">
                         <button onclick="playAudio(event)" class="absolute top-4 right-4 p-3 bg-blue-50 text-blue-500 rounded-full hover:bg-blue-100">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd"></path></svg>
                         </button>
-                        <h2 id="card-word" class="text-4xl font-extrabold text-slate-800 text-center mb-2">Word</h2>
+                        <h2 id="card-word" class="text-4xl font-extrabold text-slate-800 text-center mb-2 font-[Nunito]">Word</h2>
                         <span id="card-pos" class="text-lg text-slate-400 font-medium italic">pos.</span>
                         <p class="absolute bottom-6 text-sm text-slate-400 animate-pulse">แตะเพื่อดูคำแปล</p>
                     </div>
-
-                    <!-- ด้านหลังการ์ด (ไทย) -->
+                    <!-- หน้าไทย -->
                     <div class="absolute w-full h-full backface-hidden bg-blue-500 border-2 border-blue-600 rounded-3xl shadow-md flex flex-col items-center justify-center p-6 rotate-y-180">
                         <h2 id="card-th" class="text-3xl font-bold text-white text-center">คำแปล</h2>
                     </div>
-
                 </div>
             </main>
 
-            <!-- Action Buttons -->
             <footer class="p-6 pt-0 flex gap-4">
                 <button onclick="nextWord(false)" class="btn-chunky flex-1 bg-white border-slate-200 border-2 text-slate-500 font-bold py-4 rounded-2xl text-lg">
                     ทบทวนอีก
@@ -127,7 +163,6 @@
                     จำได้แล้ว!
                 </button>
             </footer>
-
         </div>
 
     </div>
