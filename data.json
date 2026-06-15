@@ -229,7 +229,7 @@
   { "id": 197, "word": "stupid", "pos": "adj.", "th": "โง่", "category": "Mind & Thinking" },
   { "id": 198, "word": "foolish", "pos": "adj.", "th": "โง่เขลา", "category": "Mind & Thinking" },
   { "id": 199, "word": "confused", "pos": "adj.", "th": "สับสน", "category": "Mind & Thinking" },
-  { "id": 200, "word": "confuse", "pos": "v.", "th": "ทำให้สับสน", "category": "Mind & Thinking" },
+  { "id": 200, "word": "confuse", "pos": "v.", "th": "ทำให้สับสน", "category": "Mind & Thinking" }
   
 ]
 },
@@ -309,7 +309,7 @@
 				"id": 6,
                 "name": "6. Education & Learning",
                 "thName": "การศีกษาและการเรียนรู้",
-                "range": "261-350",
+                "range": "261-320",
                 "words":
 			[
   { "id": 261, "word": "education", "pos": "n.", "th": "การศึกษา", "category": "Education & Learning" },
@@ -371,37 +371,7 @@
   { "id": 317, "word": "page", "pos": "n.", "th": "หน้า", "category": "Education & Learning" },
   { "id": 318, "word": "degree", "pos": "n.", "th": "ปริญญา", "category": "Education & Learning" },
   { "id": 319, "word": "diploma", "pos": "n.", "th": "ประกาศนียบัตร", "category": "Education & Learning" },
-  { "id": 320, "word": "certificate", "pos": "n.", "th": "ใบรับรอง", "category": "Education & Learning" },
-  { "id": 321, "word": "work", "pos": "v./n.", "th": "ทำงาน, งาน", "category": "Work & Business" },
-  { "id": 322, "word": "job", "pos": "n.", "th": "งาน", "category": "Work & Business" },
-  { "id": 323, "word": "career", "pos": "n.", "th": "อาชีพ", "category": "Work & Business" },
-  { "id": 324, "word": "profession", "pos": "n.", "th": "อาชีพ", "category": "Work & Business" },
-  { "id": 325, "word": "occupation", "pos": "n.", "th": "อาชีพ", "category": "Work & Business" },
-  { "id": 326, "word": "employment", "pos": "n.", "th": "การจ้างงาน", "category": "Work & Business" },
-  { "id": 327, "word": "employ", "pos": "v.", "th": "จ้าง", "category": "Work & Business" },
-  { "id": 328, "word": "employee", "pos": "n.", "th": "พนักงาน", "category": "Work & Business" },
-  { "id": 329, "word": "employer", "pos": "n.", "th": "นายจ้าง", "category": "Work & Business" },
-  { "id": 330, "word": "boss", "pos": "n.", "th": "เจ้านาย", "category": "Work & Business" },
-  { "id": 331, "word": "manager", "pos": "n.", "th": "ผู้จัดการ", "category": "Work & Business" },
-  { "id": 332, "word": "director", "pos": "n.", "th": "ผู้อำนวยการ", "category": "Work & Business" },
-  { "id": 333, "word": "executive", "pos": "n.", "th": "ผู้บริหาร", "category": "Work & Business" },
-  { "id": 334, "word": "chief", "pos": "n.", "th": "หัวหน้า", "category": "Work & Business" },
-  { "id": 335, "word": "supervisor", "pos": "n.", "th": "หัวหน้างาน", "category": "Work & Business" },
-  { "id": 336, "word": "staff", "pos": "n.", "th": "พนักงาน", "category": "Work & Business" },
-  { "id": 337, "word": "worker", "pos": "n.", "th": "คนงาน", "category": "Work & Business" },
-  { "id": 338, "word": "colleague", "pos": "n.", "th": "เพื่อนร่วมงาน", "category": "Work & Business" },
-  { "id": 339, "word": "partner", "pos": "n.", "th": "หุ้นส่วน", "category": "Work & Business" },
-  { "id": 340, "word": "assistant", "pos": "n.", "th": "ผู้ช่วย", "category": "Work & Business" },
-  { "id": 341, "word": "secretary", "pos": "n.", "th": "เลขานุการ", "category": "Work & Business" },
-  { "id": 342, "word": "office", "pos": "n.", "th": "สำนักงาน", "category": "Work & Business" },
-  { "id": 343, "word": "workplace", "pos": "n.", "th": "สถานที่ทำงาน", "category": "Work & Business" },
-  { "id": 344, "word": "company", "pos": "n.", "th": "บริษัท", "category": "Work & Business" },
-  { "id": 345, "word": "corporation", "pos": "n.", "th": "บริษัทมหาชน", "category": "Work & Business" },
-  { "id": 346, "word": "firm", "pos": "n.", "th": "บริษัท", "category": "Work & Business" },
-  { "id": 347, "word": "business", "pos": "n.", "th": "ธุรกิจ", "category": "Work & Business" },
-  { "id": 348, "word": "enterprise", "pos": "n.", "th": "องค์กรธุรกิจ", "category": "Work & Business" },
-  { "id": 349, "word": "organization", "pos": "n.", "th": "องค์กร", "category": "Work & Business" },
-  { "id": 350, "word": "institution", "pos": "n.", "th": "สถาบัน", "category": "Work & Business" }
+  { "id": 320, "word": "certificate", "pos": "n.", "th": "ใบรับรอง", "category": "Education & Learning" }
 ]
 
 },
