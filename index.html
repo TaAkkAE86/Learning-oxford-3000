@@ -2,54 +2,134 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oxford 3000 Words</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Oxford 3000 - Learn</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Anuphan', sans-serif; background-color: #f8fafc; }
-        /* ชุดคำสั่งสำหรับทำ Flip Card */
+        body { 
+            font-family: 'Prompt', 'Nunito', sans-serif; 
+            background-color: #f3f4f6; /* สีพื้นหลังนอกกรอบมือถือ */
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* App Container ให้เหมือนหน้าจอมือถือ */
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            height: 100vh;
+            height: 100dvh; /* รองรับ Mobile Browser */
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+        /* ซ่อน Scrollbar แต่ยัง Scroll ได้ */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Flip Card CSS */
         .perspective { perspective: 1000px; }
-        .preserve-3d { transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); }
+        .preserve-3d { transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1); }
         .backface-hidden { backface-visibility: hidden; }
         .rotate-y-180 { transform: rotateY(180deg); }
+
+        /* Chunky Button (สไตล์ Duolingo) */
+        .btn-chunky {
+            transition: all 0.1s;
+            border-bottom-width: 4px;
+        }
+        .btn-chunky:active {
+            border-bottom-width: 0px;
+            transform: translateY(4px);
+        }
     </style>
 </head>
-<body class="text-slate-800">
+<body>
 
-    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <h1 class="font-bold text-xl text-indigo-600">📚 Oxford 3000</h1>
-            <div class="text-sm bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-medium">
-                จำได้แล้ว: <span id="fav-count">0</span> คำ
-            </div>
-        </div>
-    </header>
-
-    <div class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <div class="app-container">
         
-        <!-- Sidebar หมวดหมู่ -->
-        <aside class="lg:col-span-1">
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 sticky top-24 h-[calc(100vh-8rem)] overflow-y-auto">
-                <h2 class="text-sm font-bold text-slate-400 uppercase mb-4">หมวดหมู่</h2>
-                <div id="category-list" class="space-y-1">
-                    <!-- รายชื่อหมวดหมู่จะถูกใส่ที่นี่ -->
-                    <p class="text-center text-sm text-slate-500 py-4">กำลังโหลดข้อมูล...</p>
+        <!-- ========================================== -->
+        <!-- VIEW 1: HOME (รายการหมวดหมู่) -->
+        <!-- ========================================== -->
+        <div id="view-home" class="flex flex-col h-full w-full absolute top-0 left-0 bg-slate-50 z-10 transition-transform duration-300">
+            <!-- Top Header -->
+            <header class="bg-white px-5 py-4 flex justify-between items-center border-b border-slate-200 sticky top-0 z-20">
+                <h1 class="text-xl font-extrabold text-slate-800 tracking-tight">Oxford<span class="text-blue-500">3000</span></h1>
+                <div class="flex items-center gap-1 text-amber-500 font-bold bg-amber-50 px-3 py-1.5 rounded-xl">
+                    <span>⭐</span> <span id="total-fav-count">0</span>
                 </div>
-            </div>
-        </aside>
+            </header>
 
-        <!-- พื้นที่แสดงคำศัพท์ -->
-        <main class="lg:col-span-3">
-            <div class="mb-6 flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-                <h2 id="active-category-title" class="text-lg font-bold text-slate-800">เลือกหมวดหมู่</h2>
-                <span class="text-xs text-slate-500">คลิกที่การ์ดเพื่อดูคำแปล</span>
-            </div>
+            <!-- Categories List -->
+            <main class="flex-1 overflow-y-auto no-scrollbar p-5 pb-24 space-y-4" id="category-list">
+                <!-- ข้อมูลหมวดหมู่จะถูกแทรกที่นี่ -->
+                <div class="text-center text-slate-400 mt-10">กำลังโหลดบทเรียน...</div>
+            </main>
 
-            <div id="word-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <!-- การ์ดคำศัพท์จะถูกใส่ที่นี่ -->
-            </div>
-        </main>
+            <!-- Bottom Navigation -->
+            <nav class="bg-white border-t border-slate-200 absolute bottom-0 w-full h-16 flex justify-around items-center px-6 z-20">
+                <button class="flex flex-col items-center text-blue-500">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                    <span class="text-[10px] font-bold mt-1">บทเรียน</span>
+                </button>
+                <button class="flex flex-col items-center text-slate-400 hover:text-blue-500 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    <span class="text-[10px] font-bold mt-1">คลังคำจำได้</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW 2: LEARN MODE (หน้าการ์ดคำศัพท์) -->
+        <!-- ========================================== -->
+        <div id="view-learn" class="flex flex-col h-full w-full absolute top-0 left-0 bg-white z-30 translate-x-full transition-transform duration-300">
+            
+            <!-- Learn Header & Progress -->
+            <header class="px-5 py-4 flex items-center gap-4">
+                <button onclick="closeLearnMode()" class="text-slate-400 hover:text-slate-600 p-2 -ml-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <div class="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-green-500 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+                <span id="progress-text" class="text-sm font-bold text-slate-500">0/0</span>
+            </header>
+
+            <!-- Flashcard Area -->
+            <main class="flex-1 flex flex-col items-center justify-center p-6 perspective">
+                <div id="flashcard" class="w-full max-w-sm h-80 preserve-3d cursor-pointer relative" onclick="flipCard()">
+                    
+                    <!-- ด้านหน้าการ์ด (อังกฤษ) -->
+                    <div class="absolute w-full h-full backface-hidden bg-white border-2 border-slate-200 rounded-3xl shadow-sm flex flex-col items-center justify-center p-6">
+                        <button onclick="playAudio(event)" class="absolute top-4 right-4 p-3 bg-blue-50 text-blue-500 rounded-full hover:bg-blue-100">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd"></path></svg>
+                        </button>
+                        <h2 id="card-word" class="text-4xl font-extrabold text-slate-800 text-center mb-2">Word</h2>
+                        <span id="card-pos" class="text-lg text-slate-400 font-medium italic">pos.</span>
+                        <p class="absolute bottom-6 text-sm text-slate-400 animate-pulse">แตะเพื่อดูคำแปล</p>
+                    </div>
+
+                    <!-- ด้านหลังการ์ด (ไทย) -->
+                    <div class="absolute w-full h-full backface-hidden bg-blue-500 border-2 border-blue-600 rounded-3xl shadow-md flex flex-col items-center justify-center p-6 rotate-y-180">
+                        <h2 id="card-th" class="text-3xl font-bold text-white text-center">คำแปล</h2>
+                    </div>
+
+                </div>
+            </main>
+
+            <!-- Action Buttons -->
+            <footer class="p-6 pt-0 flex gap-4">
+                <button onclick="nextWord(false)" class="btn-chunky flex-1 bg-white border-slate-200 border-2 text-slate-500 font-bold py-4 rounded-2xl text-lg">
+                    ทบทวนอีก
+                </button>
+                <button onclick="nextWord(true)" class="btn-chunky flex-1 bg-green-500 border-green-600 text-white font-bold py-4 rounded-2xl text-lg">
+                    จำได้แล้ว!
+                </button>
+            </footer>
+
+        </div>
+
     </div>
 
     <script src="app.js"></script>
